@@ -8,7 +8,7 @@ class PolyPicker{
         this.placeholder = pSelect.getAttribute('data-placeholder')||"";
         this.emptyList = pSelect.getAttribute('data-empty-list')||"";
 
-        this.options = Array.from(pSelect.options).map((pOption)=>{
+        let options = Array.from(pSelect.options).map((pOption)=>{
             return {
                 name:pOption.innerHTML,
                 value:pOption.value,
@@ -18,10 +18,10 @@ class PolyPicker{
 
         this._anoCloseHandler = this.closeHandler.bind(this);
 
-        this.render();
+        this.render(options);
     }
 
-    render(){
+    render(pOptions){
         this.container = document.createElement('div');
         this.container.setAttribute('id', this.id);
         this.container.classList.add('polypicker-container', 'close');
@@ -39,17 +39,20 @@ class PolyPicker{
         this.container.appendChild(listSelected);
         this.container.appendChild(listContainer);
         this.parent.appendChild(this.container);
+        this.setOptions(pOptions);
+    }
 
-        this.options.forEach((pOption, pIndex)=>{
+    setOptions(pOptions){
+        this.options = pOptions;
+        this.options.forEach((pOption)=>{
             let item = document.createElement('div');
             if(pOption.selected){
                 item.classList.add('selected');
                 this.createSelectedElement(pOption);
             }
-            item.setAttribute('data-index', pIndex);
             item.setAttribute('data-value', pOption.value);
             item.innerHTML = pOption.name;
-            listContainer.appendChild(item);
+            this.container.querySelector('.polypicker-list').appendChild(item);
             item.addEventListener('click', this.selectHandler.bind(this));
         });
         this.updatedList();
