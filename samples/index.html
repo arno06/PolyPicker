@@ -9,7 +9,7 @@
 <body>
     <p>
         <label>Select label : </label>
-        <select name="mySuperSelect" id="select" multiple="multiple" data-role="PolyPicker" data-placeholder="Synonymes" data-empty-list="Toutes les valeurs disponibles sont sélectionnées.">
+        <select onchange="changeHandler()" name="mySuperSelect" id="select" multiple="multiple" data-role="PolyPicker" data-placeholder="Synonymes" data-empty-list="Toutes les valeurs disponibles sont sélectionnées.">
             <option value="0">Different</option>
             <option value="1">Numerous</option>
             <option value="2">Various</option>
@@ -22,5 +22,10 @@
             <option value="9">Many</option>
         </select>
     </p>
+    <script>
+        function changeHandler(pValues){
+            console.log(pValues);
+        }
+    </script>
 </body>
 </html>

@@ -7,6 +7,8 @@ class PolyPicker{
         this.name = pSelect.getAttribute('name');
         this.placeholder = pSelect.getAttribute('data-placeholder')||"";
         this.emptyList = pSelect.getAttribute('data-empty-list')||"";
+        console.log(pSelect.getAttribute('onchange'));
+        this.onChangeListener = pSelect.getAttribute('onchange')?window[pSelect.getAttribute('onchange').replace("()", "")]:null;
 
         let options = Array.from(pSelect.options).map((pOption)=>{
             return {
@@ -83,6 +85,7 @@ class PolyPicker{
         let opt = opts[0];
         this.createSelectedElement(opt);
         this.updatedList();
+        this.onChangeListener&&this.onChangeListener(this.getValues());
     }
 
     deselectHandler(e){
@@ -94,6 +97,7 @@ class PolyPicker{
             inp.parentNode.removeChild(inp);
         }
         this.updatedList();
+        this.onChangeListener&&this.onChangeListener(this.getValues());
     }
 
     closeHandler(){
@@ -116,6 +120,14 @@ class PolyPicker{
         if(this.container.querySelectorAll(".polypicker-selected>div[data-value]").length===this.options.length && this.emptyList){
             this.container.querySelector(".polypicker-list").innerHTML = "<div class='empty'>"+this.emptyList+"</div>";
         }
+    }
+
+    onChange(pFunc){
+        this.onChangeListener = pFunc;
+    }
+
+    getValues(){
+        return Array.from(this.container.querySelectorAll('.polypicker-selected>div[data-value]')).map((pVal)=>pVal.getAttribute("data-value"));
     }
 }
 
