@@ -115,10 +115,16 @@ class PolyPicker{
             emptyLabel.parentNode.removeChild(emptyLabel);
         }
         if(!this.container.querySelectorAll(".polypicker-selected>div[data-value]").length && this.placeholder){
-            this.container.querySelector(".polypicker-selected").innerHTML = "<div class='placeholder'>"+this.placeholder+"</div>";
+            let dp = document.createElement('div');
+            dp.classList.add('placeholder');
+            dp.innerHTML = this.placeholder;
+            this.container.querySelector(".polypicker-selected").appendChild(dp);
         }
         if(this.container.querySelectorAll(".polypicker-selected>div[data-value]").length===this.options.length && this.emptyList){
-            this.container.querySelector(".polypicker-list").innerHTML = "<div class='empty'>"+this.emptyList+"</div>";
+            let de = document.createElement('div');
+            de.classList.add('empty');
+            de.innerHTML = this.emptyList;
+            this.container.querySelector(".polypicker-list").appendChild(de);
         }
     }
 
