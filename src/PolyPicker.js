@@ -7,7 +7,6 @@ class PolyPicker{
         this.name = pSelect.getAttribute('name');
         this.placeholder = pSelect.getAttribute('data-placeholder')||"";
         this.emptyList = pSelect.getAttribute('data-empty-list')||"";
-        console.log(pSelect.getAttribute('onchange'));
         this.onChangeListener = pSelect.getAttribute('onchange')?window[pSelect.getAttribute('onchange').replace("()", "")]:null;
 
         let options = Array.from(pSelect.options).map((pOption)=>{
@@ -106,11 +105,11 @@ class PolyPicker{
     }
 
     updatedList(){
-        let placeHolder = document.querySelector('.polypicker-selected>.placeholder');
+        let placeHolder = this.container.querySelector('.polypicker-selected>.placeholder');
         if(placeHolder){
             placeHolder.parentNode.removeChild(placeHolder);
         }
-        let emptyLabel = document.querySelector('.polypicker-list>.empty');
+        let emptyLabel = this.container.querySelector('.polypicker-list>.empty');
         if(emptyLabel){
             emptyLabel.parentNode.removeChild(emptyLabel);
         }
